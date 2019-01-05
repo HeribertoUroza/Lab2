@@ -6,13 +6,11 @@ const classADD = (newClass) => {
 
     let classObj = 
     {
-        students: [
-    { name: 'John', age: 30, city: 'NYC', grade: 75 },
-    { name: 'Emily', age: 28, city: 'LA', grade: 80 }
-    ] }
+        students: [], 
+    }
     ;
     
-    fs.writeFile(`./classes/${newClass}.json`, `${JSON.stringify(classObj)}`, (err) => {
+    fs.writeFile(`./classes/${newClass}.json`, JSON.stringify(classObj), (err) => {
 
         if (err) throw err;
         console.log("file written", data)
@@ -24,14 +22,30 @@ const classADD = (newClass) => {
 const studentADD = (className, studentName, age, city, grade) => {
     console.log("I am running");
 
-    fs.readFile(`./classes/${JSON.parse(className)}.json`, `utf8` , (err , data)=> {
-        console.log("is data ",JSON.parse(data).students[0])
+    fs.readFile(`./classes/${className}.json`, `utf8` , (err , data)=> {
+        console.log("is data ",JSON.parse(data).students)
         console.log("yeoeoeo " ,err)
+
+        let studentObj = {
+            "name" : studentName,
+            "age" : age,
+            "city" : city,
+            "grade" : grade,
+        };
+
+
+
+        fs.writeFile(`./classes/${className}.json`, `${JSON.stringify(studentObj)}`, (err, data)=> {
+            console.log("inside read, and write")
+            console.log(err)
+            console.log(data)
+        
+        } )
 
     })
 }
 
-
+//
 
 module.exports = {
     classADD,
